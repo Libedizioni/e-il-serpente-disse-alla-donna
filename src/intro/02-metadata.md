@@ -1,11 +1,11 @@
 # { #metadati .hidden - }
 
-{NEWLINE}
+<br/>
 
 
-{+SMALL+}
+<div class="small">
 
-{+COMPACT RIGHT+}
+<div class="compact alignright">
 
 © 1999 - **Erein argitaletxea**
 
@@ -29,6 +29,8 @@ Associazione Culturale Libe Edizioni - Roma
 
 ISBN 9788894154344
 
-{-COMPACT RIGHT-}
+</div>
 
-{-SMALL-}
+</div>
+
+
