@@ -17,4 +17,3 @@ Original title: _**Eta emakumeari sugeak esan zion**_ published by _**Erein argi
 ---
 
 ###### _This ebook was generated with [Ebook Generator](https://github.com/Libedizioni/ebook-generator) - by [Codice Ovvio](https://github.com/codiceovvio) | [Libe Edizioni](https://github.com/Libedizioni)._
-
