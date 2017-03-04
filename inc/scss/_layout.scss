@@ -10,16 +10,13 @@
 @include font-face( Raleway, Raleway-SemiBold, normal, 600 );
 @include font-face( Raleway, Raleway-SemiBoldItalic, italic, 600 );
 @include font-face( Josefin Sans, JosefinSans-Regular );
-// @include font-face( Josefin Sans, JosefinSans-Italic, italic );
 @include font-face( Josefin Sans, JosefinSans-SemiBold, normal, 600 );
-// @include font-face( Josefin Sans, JosefinSans-SemiBoldItalic, italic, 600 );
 
 html,
 body {
     font-family: $base_font;
     font-size: $base_font_size;
     line-height: $base_line_height;
-    // margin: 5%;
     text-align: justify;
 }
 
@@ -39,6 +36,7 @@ em {
 
 p {
     font-family: $base_font;
+    color: $text_color;
     // sets a minimum number of characters before and after the break
     // hyphenate-lines: 3;
     // cleaning up the ragged lines and breaks
@@ -57,6 +55,7 @@ p {
 p + p {
     margin-top: 0;
     text-indent: 1.3em;
+    // @TODO check newpage indent (occurring when reading in google play books)
 }
 
 hr {
@@ -77,6 +76,9 @@ h6 {
 }
 
 h1 {
+    font-size: 1.65em;
+    text-align: left;
+
     &.title {
         font-size: 2.2em;
         font-weight: 600;
@@ -156,7 +158,6 @@ blockquote {
 }
 
 
-
 /**
  * Page and Sections Layout
  */
@@ -190,7 +191,6 @@ blockquote {
     display: table;
     width: 100%;
     height: $page_height;
-    // page-break-before: always;
 }
 
 .middle {

@@ -29,7 +29,11 @@
     "logo": "/media/mare/DATI/0-WEB-DEVELOP-0/LIBEDIZIONI/EBOOKS_REPOS/e-il-serpente-disse-alla-donna/inc/images/logo.jpg",
     "repository": "https://github.com/Libedizioni",
     "email": "edizioni-libe@gmail.com",
-    "isbn": "9788894154344",
+    "isbn": {
+      "epub": "9788894154344",
+      "pdf": "",
+      "mobi": ""
+    },
     "copyright": "Associazione Culturale Libe Edizioni - Roma",
     "language": "ita",
     "license": "Creative Commons Attribution-ShareAlike 4.0 International - CC By-Sa 4.0",
@@ -45,14 +49,14 @@
   "tags": {
     "one": "Letteratura",
     "two": "Euskara",
-    "three": "",
+    "three": "Narrativa",
     "four": "",
     "five": "",
     "six": ""
   },
 
 
-  "version": "0.1.0",
+  "version": "0.2.1",
   "cover": "inc/images/cover.jpg",
   "fonts": "inc/fonts",
   "images": "inc/images",
