@@ -1,3 +1,10 @@
+**v0.2.1**
+
+- Add multiple ISBN parsing
+- Update & Add book-specific styles property
+- Upgrade TAGS for markdown parser
+- Add Calibre convert to build-pdf script
+
 **v0.2.0**
 
 - add source files:
