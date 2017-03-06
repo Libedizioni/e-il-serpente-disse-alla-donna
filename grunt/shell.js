@@ -6,7 +6,7 @@
 module.exports = {
 
 	// ---------------------------------- //
-	//         NEW BOOK BUILD             //
+	//           NEW BOOK BUILD           //
 	// ---------------------------------- //
 	prepare_markdown: {
 		command: [
@@ -223,5 +223,20 @@ module.exports = {
 			'git commit -m "Init repository: \"<%= book.name %>\""'
 		].join(' && ')
 	},
+
+	// ----------------------------------------- //
+	//       CHANGELOG AND VERSION UPDATES       //
+	// ----------------------------------------- //
+	changelog_version_tag: {
+		command: [
+			// Setup Variables to pass to changelog-version-tag.sh
+			//'current_branch=$(git rev-parse --abbrev-ref HEAD)',
+			//'current_tag=$(git describe --abbrev=0 --tags $(git rev-list --tags --max-count=1))',
+			//'new_tag=$(node -pe "require(\'./package.json\').version" | awk \'{ print "v"$1 }\')',
+			//'new_tag_header=$(node -pe "require(\'./package.json\').version" | awk -v today="$(date +"%Y-%m-%d")" \'{ print "**v"$1"**", "    -", today }\')',
+			// Source and run build-pdf.sh
+			'. ./inc/scripts/changelog-version-tag.sh'
+		].join(' && ')
+	}
 
 };
