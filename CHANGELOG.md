@@ -1,3 +1,11 @@
+**v0.3.0**     - 2017-03-06
+- Fix wrong branches checks in changelog script
+- Update ebook-generator package version
+- Fix: version from book-config
+- Remove newline from metadata.txt
+- Add new Grunt task: changelog_version_tag
+- Add changelog-version-tag script
+
 **v0.2.1**
 
 - Add multiple ISBN parsing
