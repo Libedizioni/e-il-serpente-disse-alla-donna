@@ -1,3 +1,10 @@
+**v0.3.1**     - 2017-04-13
+- Update ebook-generator package.json
+- Remove extra indentations
+- Conform tabs & remove spaces
+- Fix formatting issue
+- Update year to current
+
 **v0.3.0**     - 2017-03-06
 - Fix wrong branches checks in changelog script
 - Update ebook-generator package version

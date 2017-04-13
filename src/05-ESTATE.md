@@ -348,7 +348,11 @@ Dall’estremità lontana del tunnel, dalla fine, il colore degli occhi di Andon
 \newpage
 <div class="breakpage"></div>
 
-<div class="small">E se vai all’Hotel Supramonte e guardi il cielo
+<div class="small aligncenter">
+
+<br/>
+
+E se vai all’Hotel Sopramonte e guardi il cielo
 
 tu vedrai una donna in fiamme e un uomo solo
 
