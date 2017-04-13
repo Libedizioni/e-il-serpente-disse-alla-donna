@@ -26,6 +26,7 @@ module.exports = {
 			'cat $( find "<%= book.path.intro %>" -type f -name "*.md" -printf "%p " ) >> "<%= pkg.dir.inc %>/title.yaml"'
 		].join(' && ')
 	},
+	/*jshint multistr:true */
 	build_epub: {
 		command: [
 			// Setup Variables to pass to build-epub.sh
@@ -43,14 +44,22 @@ module.exports = {
 			'TEMPLATE_EPUB=<%= book.templates.epub %>',
 			'ISBN_EPUB=<%= book.publisher.isbn.epub %>',
 			// Set proper ISBN for epub file format
-			'if [ ! -z "$ISBN_EPUB" ]; then sed -i "s|BOOK_ISBN|ISBN <%= book.publisher.isbn.epub %>|g" "<%= pkg.dir.inc %>/title.yaml"; fi',
-			'if [ ! -z "$ISBN_EPUB" ]; then sed -i "s|BOOK_ISBN|<%= book.publisher.isbn.epub %>|g" "<%= pkg.dir.inc %>/metadata.xml"; fi',
+			'[ ! -z "$ISBN_EPUB" ] && \
+				sed -i "s|BOOK_ISBN|ISBN <%= book.publisher.isbn.epub %>|g" "<%= pkg.dir.inc %>/title.yaml" || \
+				sed -i "s|BOOK_ISBN|ISBN -|g" "<%= pkg.dir.inc %>/title.yaml"',
+			'[ ! -z "$ISBN_EPUB" ] && \
+				sed -i "s|opf:scheme=\"isbn\">BOOK_ISBN|opf:scheme=\"isbn\"><%= book.publisher.isbn.epub %>|g" "<%= pkg.dir.inc %>/metadata.xml" || \
+				sed -i "s|opf:scheme=\"isbn\">BOOK_ISBN|opf:scheme=\"isbn\">|g" "<%= pkg.dir.inc %>/metadata.xml"',
 			// Source and run build-epub.sh
 			'. ./inc/scripts/build-epub.sh',
 			// Reset BOOK_ISBN tag to initial state
-			'if [ ! -z "$ISBN_EPUB" ]; then echo "Reset BOOK_ISBN tag to initial state for EPUB"; fi',
-			'if [ ! -z "$ISBN_EPUB" ]; then sed -i "s|ISBN <%= book.publisher.isbn.epub %>|BOOK_ISBN|g" "<%= pkg.dir.inc %>/title.yaml"; fi',
-			'if [ ! -z "$ISBN_EPUB" ]; then sed -i "s|<%= book.publisher.isbn.epub %>|BOOK_ISBN|g" "<%= pkg.dir.inc %>/metadata.xml"; fi'
+			'[ ! -z "$ISBN_EPUB" ] && "Reset BOOK_ISBN tag to initial state for EPUB"',
+			'[ ! -z "$ISBN_EPUB" ] && \
+				sed -i "s|ISBN <%= book.publisher.isbn.epub %>|BOOK_ISBN|g" "<%= pkg.dir.inc %>/title.yaml" || \
+				sed -i "s|ISBN -|BOOK_ISBN|g" "<%= pkg.dir.inc %>/title.yaml"',
+			'[ ! -z "$ISBN_EPUB" ] && \
+				sed -i "s|opf:scheme=\"isbn\"><%= book.publisher.isbn.epub %>|opf:scheme=\"isbn\">BOOK_ISBN|g" "<%= pkg.dir.inc %>/metadata.xml" || \
+				sed -i "s|opf:scheme=\"isbn\">|opf:scheme=\"isbn\">BOOK_ISBN|g" "<%= pkg.dir.inc %>/metadata.xml"'
 		].join(' && ')
 	},
 	build_html: {
@@ -79,23 +88,33 @@ module.exports = {
 			// Additional fields needed by Calibre ebook-convert
 			'AUTHOR="<%= book.author.name %> <%= book.author.surname %>"',
 			'PUBLISHER="<%= book.publisher.name %>"',
-			'ISBN_EPUB=<%= book.publisher.isbn.epub %>',
-			'ISBN_PDF=<%= book.publisher.isbn.pdf %>',
 			'DESCRIPTION="<%= book.description %>"',
 			'TAGS="<%= book.tags.one %>,<%= book.tags.two %>,<%= book.tags.three %>,<%= book.tags.four %>,<%= book.tags.five %>,<%= book.tags.six %>"',
 			// Convert either with LaTex or Calibre
 			'ENGINE=Calibre',
+			// Check variables and set them according to their values
+			'[ -z "<%= book.publisher.isbn.epub %>" ] && ISBN_EPUB="ISBN -" || ISBN_EPUB=<%= book.publisher.isbn.epub %>',
+			'[ -z "<%= book.publisher.isbn.pdf %>" ] && ISBN_PDF="ISBN -" || ISBN_PDF=<%= book.publisher.isbn.pdf %>',
 			// Set proper ISBN for pdf file format
-			'if [ ! -z "$ISBN_PDF" ]; then sed -i "s|BOOK_ISBN|ISBN <%= book.publisher.isbn.pdf %>|g" "<%= pkg.dir.inc %>/title.yaml"; fi',
-			'if [ ! -z "$ISBN_PDF" ]; then sed -i "s|BOOK_ISBN|<%= book.publisher.isbn.pdf %>|g" "<%= pkg.dir.inc %>/metadata.xml"; fi',
+			'[ ! -z "<%= book.publisher.isbn.pdf %>" ] && \
+				sed -i "s|BOOK_ISBN|ISBN <%= book.publisher.isbn.pdf %>|g" "<%= pkg.dir.inc %>/title.yaml" || \
+				sed -i "s|BOOK_ISBN|ISBN -|g" "<%= pkg.dir.inc %>/title.yaml"',
+			'[ ! -z "<%= book.publisher.isbn.pdf %>" ] && \
+				sed -i "s|opf:scheme=\"isbn\">BOOK_ISBN|opf:scheme=\"isbn\"><%= book.publisher.isbn.pdf %>|g" "<%= pkg.dir.inc %>/metadata.xml" || \
+				sed -i "s|opf:scheme=\"isbn\">BOOK_ISBN|opf:scheme=\"isbn\">|g" "<%= pkg.dir.inc %>/metadata.xml"',
 			// Source and run build-pdf.sh
 			'. ./inc/scripts/build-pdf.sh',
 			// Reset BOOK_ISBN tag to initial state
-			'if [ ! -z "$ISBN_PDF" ]; then echo "Reset BOOK_ISBN tag to initial state for PDF"; fi',
-			'if [ ! -z "$ISBN_PDF" ]; then sed -i "s|ISBN <%= book.publisher.isbn.pdf %>|BOOK_ISBN|g" "<%= pkg.dir.inc %>/title.yaml"; fi',
-			'if [ ! -z "$ISBN_PDF" ]; then sed -i "s|<%= book.publisher.isbn.pdf %>|BOOK_ISBN|g" "<%= pkg.dir.inc %>/metadata.xml"; fi'
+			'[ ! -z "<%= book.publisher.isbn.pdf %>" ] && "Reset BOOK_ISBN tag to initial state for PDF"',
+			'[ ! -z "<%= book.publisher.isbn.pdf %>" ] && \
+				sed -i "s|ISBN <%= book.publisher.isbn.pdf %>|BOOK_ISBN|g" "<%= pkg.dir.inc %>/title.yaml" || \
+				sed -i "s|ISBN -|BOOK_ISBN|g" "<%= pkg.dir.inc %>/title.yaml"',
+			'[ ! -z "<%= book.publisher.isbn.pdf %>" ] && \
+				sed -i "s|opf:scheme=\"isbn\"><%= book.publisher.isbn.pdf %>|opf:scheme=\"isbn\">BOOK_ISBN|g" "<%= pkg.dir.inc %>/metadata.xml" || \
+				sed -i "s|opf:scheme=\"isbn\">|opf:scheme=\"isbn\">BOOK_ISBN|g" "<%= pkg.dir.inc %>/metadata.xml"'
 		].join(' && ')
 	},
+	/*jshint multistr:false */
 	test_dependencies: {
 		command: './inc/scripts/test-dependencies.sh'
 	},
@@ -181,6 +200,14 @@ module.exports = {
 			'sed -i "s|LEGALCODE|<%= book.publisher.legalcode %>|g" "<%= pkg.dir.sass %>/style.scss"'
 		].join(' && ')
 	},
+	search_replace_changelog_script: {
+		command: [
+			'cd ../<%= book.name %>',
+			'sed -i "s|package.json|book-config.json|g" "<%= pkg.dir.scripts %>/changelog-version-tag.sh"',
+			'sed -i "s|new_tag_header|new_book_tag_header|g" "<%= pkg.dir.scripts %>/changelog-version-tag.sh"',
+			'sed -i "s|new_tag|new_book_tag|g" "<%= pkg.dir.scripts %>/changelog-version-tag.sh"'
+		].join(' && ')
+	},
 	replace_readme: {
 		command: [
 			'cd ../<%= book.name %>',
@@ -188,25 +215,28 @@ module.exports = {
 			'touch README.md',
 			'echo "#<%= book.title %>" >> "README.md"',
 			'echo "##<%= book.author.name %> <%= book.author.surname %>" >> "README.md"',
-			'echo "_<%= book.description %>_" >> "README.md"',
+			'[ ! -z "<%= book.description %>" ] && echo "_<%= book.description %>_" >> "README.md"',
 			'echo "" >> "README.md"',
 			'echo "---" >> "README.md"',
 			'echo "" >> "README.md"',
-			'echo "- Translated by: **<%= book.translator.name %>**" >> "README.md"',
-			'echo "- Ebook design: **<%= book.editor.design %>**" >> "README.md"',
-			'echo "- Ebook layout: **<%= book.editor.layout %>**" >> "README.md"',
+			'[ ! -z "<%= book.translator.name %>" ] && echo "- Translated by: **<%= book.translator.name %>**" >> "README.md"',
+			'[ ! -z "<%= book.editor.design %>" ] && echo "- Ebook design: **<%= book.editor.design %>**" >> "README.md"',
+			'[ ! -z "<%= book.editor.layout %>" ] && echo "- Ebook layout: **<%= book.editor.layout %>**" >> "README.md"',
 			'echo "- Publisher: **<%= book.publisher.name %>**" >> "README.md"',
-			'echo "- ISBN: **<%= book.publisher.isbn.epub %>**" >> "README.md"',
+			'[ ! -z "<%= book.publisher.isbn.epub %>" ] || [ ! -z "<%= book.publisher.isbn.pdf %>" ] || [ ! -z "<%= book.publisher.isbn.mobi %>" ] && echo "- ISBN:" >> "README.md"',
+			'[ ! -z "<%= book.publisher.isbn.epub %>" ] && echo "    - _epub_ - **<%= book.publisher.isbn.epub %>**" >> "README.md"',
+			'[ ! -z "<%= book.publisher.isbn.pdf %>" ] && echo "    - _pdf_ - **<%= book.publisher.isbn.pdf %>**" >> "README.md"',
+			'[ ! -z "<%= book.publisher.isbn.mobi %>" ] && echo "    - _mobi_ - **<%= book.publisher.isbn.mobi %>**" >> "README.md"',
 			'echo "" >> "README.md"',
 			'echo "**©** _$(date +\"%Y\")_ | <%= book.publisher.copyright %> | [<%= book.license %>](<%= book.publisher.legalcode %>)" >> "README.md"',
 			'echo "" >> "README.md"',
-			'echo "Original title: _**<%= book.original.title %>**_ published by _**<%= book.original.publisher %>**_ in _<%= book.original.year %>_" >> "README.md"',
+			'[ ! -z "<%= book.original.title %>" ] && echo "Original title: _**<%= book.original.title %>**_ published by _**<%= book.original.publisher %>**_ in _<%= book.original.year %>_" >> "README.md"',
 			'echo "" >> "README.md"',
 			'echo "---" >> "README.md"',
 			'echo "" >> "README.md"',
 			'echo "###### _This ebook was generated with [Ebook Generator](<%= pkg.repository.url %>) - by [<%= pkg.author.name %>](<%= pkg.author.url %>) | [<%= book.publisher.name %>](<%= book.publisher.repository %>)._" >> "README.md"',
 			'echo "" >> "README.md"'
-		].join(' && ')
+		].join(' \ \n ')
 	},
 	init_book_git_repo: {
 		command: [
@@ -215,6 +245,8 @@ module.exports = {
 			'grep -rl "book-config.json" .gitignore | xargs sed -i "/book-config.json/d"',
 			'rm CHANGELOG.md',
 			'touch CHANGELOG.md',
+			'echo "#<%= book.title %>" >> "CHANGELOG.md"',
+			'echo "#### _changelog & history_" >> "CHANGELOG.md"',
 			'git init',
 			'git config user.name "<%= book.repository.user.name %>"',
 			'git config user.email "<%= book.repository.user.email %>"',
