@@ -1,3 +1,12 @@
+**v0.3.2**     - 2017-04-13
+- Better defaults for font stacks
+- Use current date in pdf builds
+- Fix ISBN parsing in grunt shell task
+- Add tables and columns styles
+- Fix spaces
+- Rename header.scss to headings.scss
+- Add sort options + new docx tags
+
 **v0.3.1**     - 2017-04-13
 - Update ebook-generator package.json
 - Remove extra indentations
