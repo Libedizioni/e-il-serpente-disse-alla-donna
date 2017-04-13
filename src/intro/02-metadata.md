@@ -1,8 +1,5 @@
 # { #metadati .hidden - }
 
-<br/>
-
-
 <div class="small">
 
 <div class="compact alignright">
@@ -13,7 +10,7 @@ Titolo originale: **Eta emakumeari sugeak esan zion**
 
 ___
 
-©  2016 - **Libe Edizioni**
+©  2017 - **Libe Edizioni**
 
 Traduzione: **Roberta Gozzi**
 
@@ -27,7 +24,7 @@ ___
 
 Associazione Culturale Libe Edizioni - Roma
 
-ISBN 9788894154344
+BOOK_ISBN
 
 </div>
 
