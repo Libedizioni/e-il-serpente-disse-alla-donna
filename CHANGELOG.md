@@ -1,3 +1,7 @@
+**v0.3.3**     - 2017-04-14
+- Fix empty ISBN parsing
+- Fix fonts definitions in _typography.scss
+
 **v0.3.2**     - 2017-04-13
 - Better defaults for font stacks
 - Use current date in pdf builds
