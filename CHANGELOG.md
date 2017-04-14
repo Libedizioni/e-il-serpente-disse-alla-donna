@@ -1,3 +1,7 @@
+**v0.3.4**     - 2017-04-14
+- Fix cover size & regenerate covers
+- Update ISBN definitions in grunt shell task
+
 **v0.3.3**     - 2017-04-14
 - Fix empty ISBN parsing
 - Fix fonts definitions in _typography.scss
